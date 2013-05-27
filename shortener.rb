@@ -54,9 +54,17 @@ get '/jquery.js' do
 end
 
 get '/:id' do
-  link = Link.find(params[:id])
-  redirect "http://#{link.url}"
+  id = params[:id]
+  if Link.exists?(id)
+    link = Link.find(id)
+    redirect "http://#{link.url}"
+  else
+    not_found do
+      halt 404, 'page not found'
+    end
+  end
 end
+
 
 post '/new' do
   # Link.new.links.build({:url => params[:url]})
@@ -65,7 +73,7 @@ post '/new' do
       :url => params[:url]
     }
   ).first_or_create
-  
+
   "localhost:4567/#{link.id}"
   # return "<a href='#{link.id}' target='_blank' >ID: #{link.id}, Website: #{link.url}</a><br />"
   # PUT CODE HERE TO CREATE NEW SHORTENED LINKS
