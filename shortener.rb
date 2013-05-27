@@ -60,11 +60,12 @@ end
 
 post '/new' do
   # Link.new.links.build({:url => params[:url]})
-  link = Link.create(
+  link = Link.where(
     {
       :url => params[:url]
     }
-  )
+  ).first_or_create
+  
   "localhost:4567/#{link.id}"
   # return "<a href='#{link.id}' target='_blank' >ID: #{link.id}, Website: #{link.url}</a><br />"
   # PUT CODE HERE TO CREATE NEW SHORTENED LINKS
