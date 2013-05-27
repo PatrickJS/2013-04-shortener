@@ -81,7 +81,7 @@ slogan.slice(0..6)
 class Chef
 
     # Read only access to attribute
-    attr_reader :name 
+    attr_reader :name
 
     # Read and write access to attribute
     attr_accessor :experience
@@ -97,15 +97,15 @@ class Chef
     #
     # unwrapping method calls:
     #
-    # metaclass.instance_eval(do 
+    # metaclass.instance_eval(do
     #   define_method(:specialty, do
     #       "I am a #{craft}!!"
-    #     end) 
+    #     end)
     #   end)
     def self.specialize(craft)
-      meta_def :specialty, do 
+      meta_def :specialty do
         "I am a #{craft}!!"
-      end 
+      end
     end
 
     # setter method for name atttribute
@@ -117,19 +117,19 @@ end
 # Baker class that inherits from Chef
 class Baker < Chef
 
-    # method not added to the Chef metaclass, 
+    # method not added to the Chef metaclass,
     # but to the derived class Baker.
     #
     # this is a method call that dynamically
     # defines a method call 'specialty' on
     # Baker as a class method.
-    specialize "Swift Baker"
-end 
+    specialize("Swift Baker")
+end
 
 # Icer class that inherits from Chef
 class Icer < Chef
     specialize "Rad Icer"
-end 
+end
 
 ########################################
 

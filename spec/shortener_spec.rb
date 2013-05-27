@@ -20,12 +20,12 @@ describe "URL Shortener" do
   def app
     Sinatra::Application
   end
-  
+
   context "successful requests" do
     it "can shorten a link" do
-      post '/new', :url => 'www.nyt.com' 
+      post '/new', :url => 'www.nyt.com'
       last_response.status == 200
-      last_response.body.should_not be_empty  
+      last_response.body.should_not be_empty
     end
 
     context "for the same link" do
@@ -53,16 +53,15 @@ describe "URL Shortener" do
     end
 
     it "short-urls redirect correctly" do
-      post '/new', :url => 'www.catalystclass.com'
+      post '/new', :url => 'www.hackreactor.com'
       short_link = last_response.body
-
+      # localhost.../1
       get '/' + short_link.split('/')[1]
-      last_response.should be_redirect 
+      last_response.should be_redirect
       follow_redirect!
-      last_request.url.should == 'http://www.catalystclass.com/'
+      last_request.url.should == 'http://www.hackreactor.com/'
     end
   end
-  
   context "unsuccessful requests" do
     it "returns a 404 for a nonsense short-link" do
       get "/notacorrectlink"
