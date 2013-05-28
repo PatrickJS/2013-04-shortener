@@ -7,6 +7,7 @@ configure :development, :production do
   ActiveRecord::Base.establish_connection(
     :adapter => 'sqlite3',
     :database =>  'db/dev.sqlite3.db'
+    # :pool => 15
   )
 end
 
@@ -73,7 +74,7 @@ post '/new' do
       :url => params[:url]
     }
   ).first_or_create
-
+  ActiveRecord::Base.connection.close
   "localhost:4567/#{link.id}"
   # return "<a href='#{link.id}' target='_blank' >ID: #{link.id}, Website: #{link.url}</a><br />"
   # PUT CODE HERE TO CREATE NEW SHORTENED LINKS
