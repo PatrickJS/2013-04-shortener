@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>Link Shortener</title>
+  <link rel="stylesheet" type="text/css" href="/assets/stylesheets/app.css">
+  <script src="/assets/lib/jquery.js"></script>
+  <script src="/assets/lib/d3.js"></script>
+  <script src="/assets/javascript/app.js"></script>
+</head>
+<body>
+
+  <form id='myForm'>
+    <input type='text' name="url" autofocus>
+    <input type="submit" value="Shorten">
+  </form>
+  <h2>Results:</h2>
+  <h3 id="display"></h3>
+<script type="text/javascript">
+  $(function() {
+    var url = "localhost:4567/",
+        json;
+    // var data = $.get(url+"get");
+
+    $('#myForm').submit(function() {
+      $.post('/new', $("#myForm").serialize(), function(data){
+        json = JSON.parse(data);
+        console.log(json);
+        var $urlJSON = $('<div />').text(json.link.url)
+        $('#display').append($urlJSON);
+        var chart = d3.select("body").append("div").attr("class", "chart");
+        chart.selectAll("div")
+          .data([json.link.clicks])
+          .enter().append("div")
+          .style("width", function(d) {
+            return d * 10 + "px";
+          })
+          .text(function(d) {
+            return d;
+          });
+      });
+      return false;
+    });
+  });
+
+</script>
+</body>
+</html>
+
