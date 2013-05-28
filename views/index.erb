@@ -16,16 +16,18 @@
   <h3 id="display"></h3>
 <script type="text/javascript">
   $(function() {
-    var url = "localhost:4567/",
+    var url = "localhost:4567/getD3",
         json;
-    // var data = $.get(url+"get");
+    // $.get(url, function(data){
+
+    // })
 
     $('#myForm').submit(function() {
       $.post('/new', $("#myForm").serialize(), function(data){
         json = JSON.parse(data);
         console.log(json);
         var $urlJSON = $('<div />').text(json.link.url)
-        $('#display').append($urlJSON);
+        // $('#display').append($urlJSON);
         var chart = d3.select("body").append("div").attr("class", "chart");
         chart.selectAll("div")
           .data([json.link.clicks])
@@ -33,9 +35,9 @@
           .style("width", function(d) {
             return d * 10 + "px";
           })
-          .text(function(d) {
+          .text(function(d){
             return d;
-          });
+          }).append("span").text(json.link.url);
       });
       return false;
     });

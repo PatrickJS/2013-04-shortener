@@ -41,8 +41,7 @@ get '/:id' do
   id = params[:id]
   if Link.exists?(id)
     link = Link.find(id)
-    clicks = link.clicks
-    Link.update(id, :clicks => clicks+=1);
+    Link.update(id, :clicks => link.clicks+=1);
 
     redirect "http://#{link.url}"
   else
